@@ -1,4 +1,4 @@
-# pip install streamlit langchain langchain-openai beautifulsoup4 langchain-community pyhon-dotenv chromadb
+# pip install streamlit langchain langchain-openai beautifulsoup4 langchain-community pyhon-dotenv chromadb pypdf
 
 __import__('pysqlite3')
 import sys
@@ -18,6 +18,8 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_community.document_loaders import SitemapLoader
 from langchain_community.document_loaders.recursive_url_loader import RecursiveUrlLoader
 from bs4 import BeautifulSoup as Soup
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.document_loaders.merge import MergedDataLoader
 
 load_dotenv()
 
@@ -26,7 +28,17 @@ def get_vectorstore_from_url(url):
     loader = WebBaseLoader(url)
     # loader = SitemapLoader(web_path=url)
     # loader = RecursiveUrlLoader(url=url, extractor=lambda x: Soup(x, "html.parser").text)
-    document = loader.load()
+
+    return loader
+
+def get_vector_store_from_pdf(file):
+    loader = PyPDFLoader(file)
+
+    return loader
+
+def merge_loader(url_loader, pdf_loader):
+    loader_all = MergedDataLoader(loaders=[url_loader, pdf_loader])
+    document = loader_all.load()
 
     # split document into chunks
     text_splitter = RecursiveCharacterTextSplitter()
@@ -36,6 +48,8 @@ def get_vectorstore_from_url(url):
     vector_store = Chroma.from_documents(document_chunks, OpenAIEmbeddings())
 
     return vector_store
+
+
 
 def get_context_retriever_chain(vector_store):
     llm = ChatOpenAI()
@@ -89,6 +103,7 @@ st.title("BPS Babel AI Chatbot")
 
 # user input
 url = "http://babel.bps.go.id/"
+pdf_file = "./doc/layanan.pdf"
 
 # session state
 if "chat_history" not in st.session_state:
@@ -97,7 +112,7 @@ if "chat_history" not in st.session_state:
     ]
 
 if "vector_store" not in st.session_state:
-    st.session_state.vector_store = get_vectorstore_from_url(url)
+    st.session_state.vector_store = merge_loader(get_vectorstore_from_url(url), get_vector_store_from_pdf(pdf_file))
 
 user_query = st.chat_input("Tulis pesan anda di sini...")
 if user_query is not None and user_query != "":
