@@ -1,8 +1,8 @@
 # pip install streamlit langchain langchain-openai beautifulsoup4 langchain-community pyhon-dotenv chromadb pypdf
 
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+# __import__('pysqlite3')
+# import sys
+# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 import streamlit as st
 from langchain_core.messages import AIMessage, HumanMessage
@@ -36,8 +36,13 @@ def get_vector_store_from_pdf(file):
 
     return loader
 
-def merge_loader(url_loader, pdf_loader):
-    loader_all = MergedDataLoader(loaders=[url_loader, pdf_loader])
+def get_vector_store_from_url_recursive(url):
+    loader = RecursiveUrlLoader(url=url, extractor=lambda x: Soup(x, "html.parser").text)
+
+    return loader
+
+def merge_loader(url_loader, pdf_loader, url_recursive_loader):
+    loader_all = MergedDataLoader(loaders=[url_loader, pdf_loader, url_recursive_loader])
     document = loader_all.load()
 
     # split document into chunks
@@ -91,8 +96,8 @@ def get_response(user_input):
 
 
 # app config
-st.set_page_config(page_title="BPS Babel AI Chatbot")
-st.title("BPS Babel AI Chatbot")
+st.set_page_config(page_title="SATIA (Statistical AI Assistant)")
+st.title("SATIA (Statistical AI Assistant)")
 
 # sidebar
 # with st.sidebar:
@@ -104,15 +109,16 @@ st.title("BPS Babel AI Chatbot")
 # user input
 url = "http://babel.bps.go.id/"
 pdf_file = "./doc/layanan.pdf"
+url_recursive = "https://babel.bps.go.id/pressrelease.html?katsubjek=&Brs%5Btgl_rilis_ind%5D=&Brs%5Btahun%5D=2024&yt0=Cari"
 
 # session state
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = [
-        AIMessage(content="Halo, saya adalah bot. Apa yang bisa saya bantu?"),
+        AIMessage(content="Halo, saya adalah SATIA, Statistical AI Assistant. Apa yang bisa saya bantu?"),
     ]
 
 if "vector_store" not in st.session_state:
-    st.session_state.vector_store = merge_loader(get_vectorstore_from_url(url), get_vector_store_from_pdf(pdf_file))
+    st.session_state.vector_store = merge_loader(get_vectorstore_from_url(url), get_vector_store_from_pdf(pdf_file), get_vector_store_from_url_recursive(url_recursive))
 
 user_query = st.chat_input("Tulis pesan anda di sini...")
 if user_query is not None and user_query != "":
