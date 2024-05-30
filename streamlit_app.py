@@ -37,7 +37,7 @@ def get_vector_store_from_pdf(file):
     return loader
 
 def get_vector_store_from_url_recursive(url):
-    loader = RecursiveUrlLoader(url=url, max_depth=3, extractor=lambda x: Soup(x, "html.parser").text)
+    loader = RecursiveUrlLoader(url=url, max_depth=3, timeout=60, extractor=lambda x: Soup(x, "html.parser").text)
 
     return loader
 
