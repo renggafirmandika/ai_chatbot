@@ -109,7 +109,7 @@ st.title("SATIA (Statistical AI Assistant)")
 # user input
 url = "http://babel.bps.go.id/"
 pdf_file = "./doc/layanan.pdf"
-url_recursive = "https://babel.bps.go.id/pressrelease.html?katsubjek=&Brs%5Btgl_rilis_ind%5D=&Brs%5Btahun%5D=2024&yt0=Cari"
+url_recursive = "https://babel.beta.bps.go.id/id/pressrelease"
 
 # session state
 if "chat_history" not in st.session_state:
