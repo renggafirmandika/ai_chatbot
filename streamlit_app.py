@@ -20,6 +20,8 @@ from langchain_community.document_loaders.recursive_url_loader import RecursiveU
 from bs4 import BeautifulSoup as Soup
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.document_loaders.merge import MergedDataLoader
+from langchain_core.documents import Document
+from langchain_community.document_loaders import ApifyDatasetLoader
 
 load_dotenv()
 
@@ -41,8 +43,8 @@ def get_vector_store_from_url_recursive(url):
 
     return loader
 
-def merge_loader(url_loader, pdf_loader, url_recursive_loader):
-    loader_all = MergedDataLoader(loaders=[url_loader, pdf_loader, url_recursive_loader])
+def merge_loader(apify_loader, pdf_loader):
+    loader_all = MergedDataLoader(loaders=[apify_loader, pdf_loader])
     document = loader_all.load()
 
     # split document into chunks
@@ -54,7 +56,23 @@ def merge_loader(url_loader, pdf_loader, url_recursive_loader):
 
     return vector_store
 
+def get_vector_store_from_apify():
+    # apify = ApifyWrapper()
+    # loader = apify.call_actor(
+    #     actor_id="apify/website-content-crawler",
+    #     run_input={"startUrls": [{"url": url}]},
+    #     dataset_mapping_function=lambda item: Document(
+    #         page_content=item["text"] or "", metadata={"source": item["url"]}
+    #     ),
+    # )
+    loader = ApifyDatasetLoader(
+        dataset_id="TUKS9fjILEq9gXrNy",
+        dataset_mapping_function=lambda dataset_item: Document(
+            page_content=dataset_item["text"], metadata={"source": dataset_item["url"]}
+        ),
+    )
 
+    return loader
 
 def get_context_retriever_chain(vector_store):
     llm = ChatOpenAI()
@@ -118,7 +136,7 @@ if "chat_history" not in st.session_state:
     ]
 
 if "vector_store" not in st.session_state:
-    st.session_state.vector_store = merge_loader(get_vectorstore_from_url(url), get_vector_store_from_pdf(pdf_file), get_vector_store_from_url_recursive(url_recursive))
+    st.session_state.vector_store = merge_loader(get_vector_store_from_apify(), get_vector_store_from_pdf(pdf_file))
 
 user_query = st.chat_input("Tulis pesan anda di sini...")
 if user_query is not None and user_query != "":
