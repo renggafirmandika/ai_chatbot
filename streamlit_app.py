@@ -66,7 +66,7 @@ def get_vector_store_from_apify():
     #     ),
     # )
     loader = ApifyDatasetLoader(
-        dataset_id="TUKS9fjILEq9gXrNy",
+        dataset_id="ggyqgJBcqBC48QhHE",
         dataset_mapping_function=lambda dataset_item: Document(
             page_content=dataset_item["text"], metadata={"source": dataset_item["url"]}
         ),
