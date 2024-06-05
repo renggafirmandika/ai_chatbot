@@ -22,6 +22,7 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.document_loaders.merge import MergedDataLoader
 from langchain_core.documents import Document
 from langchain_community.document_loaders import ApifyDatasetLoader
+from streamlit import _bottom
 
 load_dotenv()
 
@@ -66,7 +67,7 @@ def get_vector_store_from_apify():
     #     ),
     # )
     loader = ApifyDatasetLoader(
-        dataset_id="ggyqgJBcqBC48QhHE",
+        dataset_id="O3OWnJu4E3gbicWmC",
         dataset_mapping_function=lambda dataset_item: Document(
             page_content=dataset_item["text"], metadata={"source": dataset_item["url"]}
         ),
@@ -153,3 +154,6 @@ for message in st.session_state.chat_history:
     elif isinstance(message, HumanMessage):
         with st.chat_message("Human"):
             st.write(message.content)
+
+_bottom.caption('<div style="text-align: center">Untuk data lebih lengkap dan akurat, silahkan kunjungi <a href="https://babel.bps.go.id" target="_blank">website BPS Provinsi Kepulauan Bangka Belitung</a>.</div>', unsafe_allow_html=True)
+
