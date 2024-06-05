@@ -115,8 +115,8 @@ def get_response(user_input):
 
 
 # app config
-st.set_page_config(page_title="SATIA (Statistical AI Assistant)")
-st.title("SATIA (Statistical AI Assistant)")
+st.set_page_config(page_title="SATIA (Statistics AI Assistant)")
+st.title("SATIA (Statistics AI Assistant)")
 
 # sidebar
 # with st.sidebar:
@@ -133,7 +133,7 @@ url_recursive = "https://babel.beta.bps.go.id/id/pressrelease"
 # session state
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = [
-        AIMessage(content="Halo, saya adalah SATIA, Statistical AI Assistant. Apa yang bisa saya bantu?"),
+        AIMessage(content="Halo, saya adalah SATIA, Statistics AI Assistant. Apa yang bisa saya bantu?"),
     ]
 
 if "vector_store" not in st.session_state:
