@@ -50,10 +50,14 @@ def merge_loader(apify_loader, pdf_loader):
 
     # split document into chunks
     text_splitter = RecursiveCharacterTextSplitter()
-    document_chunks = text_splitter.split_documents(document)
+    # document_chunks = text_splitter.split_documents(document)
+
+    persist_dir = "./dir/"
 
     # create a vectorestore from the chunks
-    vector_store = Chroma.from_documents(document_chunks, OpenAIEmbeddings())
+    # vector_store = Chroma.from_documents(document_chunks, OpenAIEmbeddings())
+
+    vector_store = Chroma(persist_directory=persist_dir, embedding_function=OpenAIEmbeddings())
 
     return vector_store
 
