@@ -133,7 +133,7 @@ st.title("SATIA (Statistics AI Assistant)")
 
 # user input
 url = "http://babel.bps.go.id/"
-pdf_file = "./doc/kumpulan materi.pdf"
+# pdf_file = "./doc/kumpulan materi.pdf"
 pdf_file1 = "./doc/QnA Entry meeting.pdf"
 pdf_file2 = "./doc/QNA Settama.pdf"
 pdf_file3 = "./doc/QnA Pelatihan EPSS.pdf"
@@ -145,8 +145,8 @@ if "chat_history" not in st.session_state:
         AIMessage(content="Halo, saya adalah SATIA, Statistics AI Assistant. Apa yang bisa saya bantu?"),
     ]
 
-if "vector_store" not in st.session_state:
-    st.session_state.vector_store = merge_loader(get_vector_store_from_pdf(pdf_file))
+# if "vector_store" not in st.session_state:
+#    st.session_state.vector_store = merge_loader(get_vector_store_from_pdf(pdf_file))
 
 user_query = st.chat_input("Tulis pesan anda di sini...")
 if user_query is not None and user_query != "":
