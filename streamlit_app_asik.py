@@ -43,14 +43,14 @@ def get_vector_store_from_url_recursive(url):
 
     return loader
 
-def merge_loader(pdf_loader):
-    loader_all = MergedDataLoader(loaders=[pdf_loader])
+def merge_loader():
     # loader_all = MergedDataLoader(loaders=[pdf_loader])
-    document = loader_all.load()
+    # loader_all = MergedDataLoader(loaders=[pdf_loader])
+    # document = loader_all.load()
 
     # split document into chunks
-    text_splitter = RecursiveCharacterTextSplitter()
-    document_chunks = text_splitter.split_documents(document)
+    # text_splitter = RecursiveCharacterTextSplitter()
+    # document_chunks = text_splitter.split_documents(document)
 
     persist_dir = "./dir2/"
 
@@ -145,8 +145,8 @@ if "chat_history" not in st.session_state:
         AIMessage(content="Halo, saya adalah SATIA, Statistics AI Assistant. Apa yang bisa saya bantu?"),
     ]
 
-# if "vector_store" not in st.session_state:
-#    st.session_state.vector_store = merge_loader(get_vector_store_from_pdf(pdf_file))
+if "vector_store" not in st.session_state:
+    st.session_state.vector_store = merge_loader()
 
 user_query = st.chat_input("Tulis pesan anda di sini...")
 if user_query is not None and user_query != "":
