@@ -1,8 +1,8 @@
 # pip install streamlit langchain langchain-openai beautifulsoup4 langchain-community python-dotenv chromadb pypdf apify-client
 
-# __import__('pysqlite3')
-# import sys
-# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 import streamlit as st
 from langchain_core.messages import AIMessage, HumanMessage
