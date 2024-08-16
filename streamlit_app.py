@@ -4,6 +4,7 @@ __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
+import logging
 import streamlit as st
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_community.document_loaders import WebBaseLoader
@@ -25,6 +26,7 @@ from langchain_community.document_loaders import ApifyDatasetLoader
 from streamlit import _bottom
 
 load_dotenv()
+logging.basicConfig(level=logging.INFO, filename="req_log.log", format="%(asctime)s %(message)s")
 
 def get_vectorstore_from_url(url):
     # get the text in document form
@@ -114,6 +116,9 @@ def get_response(user_input):
         "chat_history": st.session_state.chat_history,
         "input": user_query
     })
+
+    logging.info(f"PROMPT:  {user_query}")
+    logging.info(f"RESPONSE:  {response['answer']}")
 
     return response['answer'] 
 
