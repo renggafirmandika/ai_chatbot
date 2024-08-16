@@ -117,8 +117,8 @@ def get_response(user_input):
         "input": user_query
     })
 
-    logging.info(f"PROMPT:  {user_query}")
-    logging.info(f"RESPONSE:  {response['answer']}")
+    logging.info(f"PROMPT: {user_query}")
+    logging.info(f"RESPONSE: {response['answer']}")
 
     return response['answer'] 
 
