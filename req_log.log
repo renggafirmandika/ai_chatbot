@@ -1,0 +1,16 @@
+2024-08-16 15:54:23,884 HTTP Request: GET https://api.apify.com/v2/datasets/09s7HKU95jEztpoCs/items?clean=1 "HTTP/1.1 200 OK"
+2024-08-16 15:54:42,500 Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2024-08-16 15:54:42,623 Collection langchain is not created.
+2024-08-16 15:54:47,124 HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-08-16 15:54:47,790 HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-08-16 15:54:49,690 HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-08-16 15:54:49,946 PROMPT:  halo
+2024-08-16 15:54:49,946 RESPONSE:  Halo! Ada yang bisa saya bantu?
+2024-08-16 15:55:30,698 HTTP Request: GET https://api.apify.com/v2/datasets/09s7HKU95jEztpoCs/items?clean=1 "HTTP/1.1 200 OK"
+2024-08-16 15:55:49,068 Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2024-08-16 15:55:49,178 Collection langchain is not created.
+2024-08-16 15:56:09,895 HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-08-16 15:56:10,508 HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-08-16 15:56:11,636 HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-08-16 15:56:11,638 PROMPT:  saya mau tanya
+2024-08-16 15:56:11,639 RESPONSE:  Tentu, silakan beri tahu pertanyaan atau informasi yang ingin Anda ketahui.
