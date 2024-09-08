@@ -46,12 +46,12 @@ def get_vector_store_from_url_recursive(url):
 
     return loader
 
-def merge_loader(apify_loader, pdf_loader):
-    loader_all = MergedDataLoader(loaders=[apify_loader, pdf_loader])
-    document = loader_all.load()
+def merge_loader():
+    # loader_all = MergedDataLoader(loaders=[apify_loader, pdf_loader])
+    # document = loader_all.load()
 
     # split document into chunks
-    text_splitter = RecursiveCharacterTextSplitter()
+    # text_splitter = RecursiveCharacterTextSplitter()
     # document_chunks = text_splitter.split_documents(document)
 
     persist_dir = "./dir/"
@@ -72,12 +72,12 @@ def get_vector_store_from_apify():
     #         page_content=item["text"] or "", metadata={"source": item["url"]}
     #     ),
     # )
-    loader = ApifyDatasetLoader(
-        dataset_id="09s7HKU95jEztpoCs",
-        dataset_mapping_function=lambda dataset_item: Document(
-            page_content=dataset_item["text"], metadata={"source": dataset_item["url"]}
-        ),
-    )
+    # loader = ApifyDatasetLoader(
+    #    dataset_id="09s7HKU95jEztpoCs",
+    #    dataset_mapping_function=lambda dataset_item: Document(
+    #        page_content=dataset_item["text"], metadata={"source": dataset_item["url"]}
+    #    ),
+    # )
 
     return loader
 
@@ -146,7 +146,7 @@ if "chat_history" not in st.session_state:
     ]
 
 if "vector_store" not in st.session_state:
-    st.session_state.vector_store = merge_loader(get_vector_store_from_apify(), get_vector_store_from_pdf(pdf_file))
+    st.session_state.vector_store = merge_loader()
 
 user_query = st.chat_input("Tulis pesan anda di sini...")
 if user_query is not None and user_query != "":
