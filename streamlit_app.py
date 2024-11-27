@@ -82,7 +82,7 @@ def get_vector_store_from_apify():
     return loader
 
 def get_context_retriever_chain(vector_store):
-    llm = ChatOpenAI(temperature=0.5, max_tokens=2000)
+    llm = ChatOpenAI(temperature=0.5, max_tokens=4000)
     retirever = vector_store.as_retriever()
 
     prompt = ChatPromptTemplate.from_messages([
@@ -96,7 +96,7 @@ def get_context_retriever_chain(vector_store):
     return retriever_chain
 
 def get_conversational_rag_chain(retriever_chain):
-    llm = ChatOpenAI(temperature=0.5, max_tokens=2000)
+    llm = ChatOpenAI(temperature=0.5, max_tokens=4000)
 
     prompt = ChatPromptTemplate.from_messages([
         ("system", "Answer the user's questions based on the below context:\n\n{context}"),
